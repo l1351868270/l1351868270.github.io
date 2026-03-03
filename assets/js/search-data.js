@@ -30,15 +30,15 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-a-distill-style-blog-post",
+        },{id: "post-lora-1-初识lora",
         
-          title: "a distill-style blog post",
+          title: "lora 1: 初识lora",
         
-        description: "an example of a distill-style blog post and main elements",
+        description: "lora学习笔记",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2021/first/";
+            window.location.href = "/blog/2026/lora-1/";
           
         },
       },{id: "books-the-godfather",
