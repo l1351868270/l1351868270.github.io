@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-lora-1-初识lora",
+        },{id: "post-策略梯度算法汇总",
+        
+          title: "策略梯度算法汇总",
+        
+        description: "强化学习笔记",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/po-2/";
+          
+        },
+      },{id: "post-lora-1-初识lora",
         
           title: "lora 1: 初识lora",
         
