@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-策略梯度算法汇总",
+        },{id: "post-turboquant-1-初识",
+        
+          title: "TurboQuant 1 - 初识",
+        
+        description: "推理笔记",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/turboquant-3/";
+          
+        },
+      },{id: "post-策略梯度算法汇总",
         
           title: "策略梯度算法汇总",
         

@@ -1,1 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://l1351868270.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://l1351868270.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-03-05T12:28:35+00:00</updated><id>https://l1351868270.github.io/feed.xml</id><title type="html">Shuliang Li</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">策略梯度算法汇总</title><link href="https://l1351868270.github.io/blog/2026/po-2/" rel="alternate" type="text/html" title="策略梯度算法汇总"/><published>2026-03-04T21:15:00+00:00</published><updated>2026-03-04T21:15:00+00:00</updated><id>https://l1351868270.github.io/blog/2026/po-2</id><content type="html" xml:base="https://l1351868270.github.io/blog/2026/po-2/"><![CDATA[<h2 id="gspo-">GSPO <d-cite key="group-sequence-policy-optimization"></d-cite></h2> \[\begin{aligned} \mathcal{J}_{GSPO} \left( \theta \right) &amp;= \mathbb{E}_{x \sim \mathcal{D}, \{y_{i}\}_{i=1}^{G} \sim \pi_{\theta_{old}} \left( \cdot | x \right)} \\ &amp;= \left[ \frac{1}{G} \sum_{i=1}^{G} \text{min} \left( s_{i}\left( \theta \right) \hat{A_{i}}, \text{clip} \left(s_{i}\left( \theta \right), 1-\epsilon, 1 + \epsilon \right)\hat{A_{i}} \right) \right] \end{aligned}\]]]></content><author><name>Shuliang Li</name></author><summary type="html"><![CDATA[强化学习笔记]]></summary></entry><entry><title type="html">lora 1: 初识lora</title><link href="https://l1351868270.github.io/blog/2026/lora-1/" rel="alternate" type="text/html" title="lora 1: 初识lora"/><published>2026-02-03T21:15:00+00:00</published><updated>2026-02-03T21:15:00+00:00</updated><id>https://l1351868270.github.io/blog/2026/lora-1</id><content type="html" xml:base="https://l1351868270.github.io/blog/2026/lora-1/"><![CDATA[<h2 id="基本概念">基本概念</h2> <h3 id="基本公式">基本公式</h3> \[W = W_{0} + AB, \qquad A \in \mathbb{R}^{d_{in} \times r}, B \in \mathbb{R}^{r \times d_{out}}\]]]></content><author><name>Shuliang Li</name></author><summary type="html"><![CDATA[lora学习笔记]]></summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://l1351868270.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://l1351868270.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-04-09T13:21:35+00:00</updated><id>https://l1351868270.github.io/feed.xml</id><title type="html">Shuliang Li</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">TurboQuant 1 - 初识</title><link href="https://l1351868270.github.io/blog/2026/turboquant-3/" rel="alternate" type="text/html" title="TurboQuant 1 - 初识"/><published>2026-04-08T21:15:00+00:00</published><updated>2026-04-08T21:15:00+00:00</updated><id>https://l1351868270.github.io/blog/2026/turboquant-3</id><content type="html" xml:base="https://l1351868270.github.io/blog/2026/turboquant-3/"><![CDATA[<h1 id="极坐标">极坐标</h1> <h2 id="直角坐标---极坐标">直角坐标 -&gt; 极坐标</h2> \[r = \sqrt{x^{2} + y^{2}}\] \[\text{tan}(\theta) = \frac{y}{x}\] <h2 id="极坐标---直角坐标">极坐标 -&gt; 直角坐标</h2> \[x = r * \text{cos}(\theta)\] \[y = r * \text{sin}(\theta)\] <h1 id="fact1">fact1</h1> <p>For any positive integer $d$, if $x \in R^{d}$ is a zero mean unit variance isotropic Gaussian random variable in dimension $d$, i.e., $x ∼ N (0, I_d)$, then its 2-norm, denoted by $r := \lVert x_2 \rVert$, follows a generalized gamma distribution with the following probability density for any $r ≥ 0$:</p> \[f_{R}\left( r \right) = \frac{2}{2^{d/2} \cdot \Gamma \left( d / 2 \right)} r^{d-1} exp \left(-r^{2}/2 \right)\] <h2 id="验证">验证</h2> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/2026-04-09-turboquant-3/1-480.webp 480w,/assets/img/2026-04-09-turboquant-3/1-800.webp 800w,/assets/img/2026-04-09-turboquant-3/1-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/2026-04-09-turboquant-3/1.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="图片标题" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> <figcaption class="caption"></figcaption> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import torch
+from torch.distributions import Gamma, TransformedDistribution
+from torch.distributions.transforms import PowerTransform
+import matplotlib.pyplot as plt
+
+dims = [16, 64, 256, 1024]
+colors = ['#FF9999', '#66B2FF', '#99FF99', '#FFCC99']
+plt.figure(figsize=(12, 7))
+
+for i, dim in enumerate(dims):
+    # 1. 定义 Chi 分布
+    # Chi2(df) 等价于 Gamma(df/2, 0.5)
+    base_dist = Gamma(torch.tensor([dim / 2.0]), torch.tensor([0.5]))
+    chi_dist = TransformedDistribution(base_dist, PowerTransform(0.5))
+    
+    # 2. 采样并计算平方模长 ||x||^2
+    x_samples = torch.randn(n_samples, dim)
+    # 计算平方和：这才是严格符合 Gamma(d/2, 0.5) 的变量
+    samples = torch.sum(x_samples**2, dim=1).sqrt()
+
+    
+    # 3. 绘制直方图 (使用 density=True 确保 y 轴为频率密度)
+    plt.hist(samples.numpy(), bins=40, alpha=0.5, density=True, 
+             label=f'df={dim}', color=colors[i], edgecolor='white')
+    
+    # 4. 绘制拟合的概率密度曲线 (PDF)
+    # 根据采样范围动态生成 x 轴
+    x_min, x_max = samples.min() * 0.8, samples.max() * 1.2
+    x = torch.linspace(x_min, x_max, 500)
+    pdf = chi_dist.log_prob(x).exp()
+    plt.plot(x.numpy(), pdf.numpy(), color=colors[i], lw=2)
+
+plt.title('Chi Distribution Sampling (1000 samples per df)', fontsize=15)
+plt.xlabel('Value')
+plt.ylabel('Density')
+plt.legend()
+plt.grid(axis='y', linestyle='--', alpha=0.4)
+plt.show()
+</code></pre></div></div>]]></content><author><name>Shuliang Li</name></author><summary type="html"><![CDATA[推理笔记]]></summary></entry><entry><title type="html">策略梯度算法汇总</title><link href="https://l1351868270.github.io/blog/2026/po-2/" rel="alternate" type="text/html" title="策略梯度算法汇总"/><published>2026-03-04T21:15:00+00:00</published><updated>2026-03-04T21:15:00+00:00</updated><id>https://l1351868270.github.io/blog/2026/po-2</id><content type="html" xml:base="https://l1351868270.github.io/blog/2026/po-2/"><![CDATA[<h2 id="gspo-">GSPO <d-cite key="group-sequence-policy-optimization"></d-cite></h2> \[\begin{aligned} \mathcal{J}_{GSPO} \left( \theta \right) &amp;= \mathbb{E}_{x \sim \mathcal{D}, \{y_{i}\}_{i=1}^{G} \sim \pi_{\theta_{old}} \left( \cdot | x \right)} \\ &amp;= \left[ \frac{1}{G} \sum_{i=1}^{G} \text{min} \left( s_{i}\left( \theta \right) \hat{A_{i}}, \text{clip} \left(s_{i}\left( \theta \right), 1-\epsilon, 1 + \epsilon \right)\hat{A_{i}} \right) \right] \end{aligned}\]]]></content><author><name>Shuliang Li</name></author><summary type="html"><![CDATA[强化学习笔记]]></summary></entry><entry><title type="html">lora 1: 初识lora</title><link href="https://l1351868270.github.io/blog/2026/lora-1/" rel="alternate" type="text/html" title="lora 1: 初识lora"/><published>2026-02-03T21:15:00+00:00</published><updated>2026-02-03T21:15:00+00:00</updated><id>https://l1351868270.github.io/blog/2026/lora-1</id><content type="html" xml:base="https://l1351868270.github.io/blog/2026/lora-1/"><![CDATA[<h2 id="基本概念">基本概念</h2> <h3 id="基本公式">基本公式</h3> \[W = W_{0} + AB, \qquad A \in \mathbb{R}^{d_{in} \times r}, B \in \mathbb{R}^{r \times d_{out}}\]]]></content><author><name>Shuliang Li</name></author><summary type="html"><![CDATA[lora学习笔记]]></summary></entry></feed>
